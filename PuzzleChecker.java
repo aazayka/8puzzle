@@ -28,12 +28,25 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
+
 public class PuzzleChecker {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        String[] fnames = Files.walk(Paths.get("."))
+                               .map(Object::toString)
+                               .filter(x -> x.endsWith("txt"))
+                               .filter(x -> x.contains("4x4"))
+                               .skip(0)
+                               .limit(20)
+                               .collect(Collectors.toList()).toArray(new String[0]);
 
         // for each command-line argument
-        for (String filename : args) {
+        for (String filename : fnames) {
 
             // read in the board specified in the filename
             In in = new In(filename);
